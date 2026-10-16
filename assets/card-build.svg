@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d1a33"/><stop offset=".45" stop-color="#5a3a5e"/><stop offset=".68" stop-color="#c56a55"/><stop offset=".82" stop-color="#f2a35f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".72" r=".55">
+      <stop offset="0" stop-color="#ffd9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="700" fill="url(#sky)"/>
+  <rect width="500" height="700" fill="url(#glow)"/>
+  <circle cx="250" cy="470" r="46" fill="#ffe9c4"/>
+  <path d="M0 520 L120 430 L200 500 L290 400 L380 480 L500 390 L500 700 L0 700 Z" fill="#241d33"/>
+  <path d="M0 590 L90 520 L210 590 L330 510 L500 600 L500 700 L0 700 Z" fill="#16121f"/>
+  <path d="M290 400 L330 440 L310 444 L260 470 L250 440 Z" fill="#f7f0ff" opacity=".9"/>
+  <path d="M290 400 L330 440 L340 468 L300 460 L266 428 Z" fill="#b8aecf" opacity=".55"/>
+</svg>

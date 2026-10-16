@@ -1,0 +1,16 @@
+.vs-cloud-sea {
+  --vs-cloud-sea-zenith: #1f2656;
+  --vs-cloud-sea-horizon: #f0a488;
+  --vs-cloud-sea-sun: #ffc58f;
+  --vs-cloud-sea-shade: #6b6f9c;
+  --vs-cloud-sea-sun-height: .12;
+  --vs-cloud-sea-part: 1;
+  --vs-cloud-sea-speed: 1;
+  --vs-cloud-sea-exposure: 1;
+  position: absolute; inset: 0; overflow: hidden; touch-action: pan-y;
+  background:
+    radial-gradient(60% 30% at 62% 38%, color-mix(in oklab, var(--vs-cloud-sea-sun) 55%, transparent), transparent 70%),
+    linear-gradient(var(--vs-cloud-sea-zenith), var(--vs-cloud-sea-horizon) 38%, color-mix(in oklab, var(--vs-cloud-sea-shade) 70%, #fff) 44%, var(--vs-cloud-sea-shade));
+}
+.vs-cloud-sea-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.6s cubic-bezier(.16, 1, .3, 1); }
+.vs-cloud-sea-ready .vs-cloud-sea-canvas { opacity: 1; }

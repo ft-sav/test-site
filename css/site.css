@@ -1,0 +1,217 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #08090d;
+  color: #e8e6df;
+  font-family: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* smooth scrolling between sections */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ==== landing hero: full viewport, cloud sea behind, copy above ==== */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-section .vs-cloud-sea { z-index: 0; }
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 20px;
+  pointer-events: none;
+  will-change: transform, opacity; /* parallax target (site.js) */
+}
+.hero-name {
+  margin: 0;
+  font-size: clamp(3rem, 11vw, 7rem);
+  font-weight: 400;
+  font-family: "Italiana", "Chakra Petch", serif;
+  letter-spacing: 0.06em;
+  color: #fffaf2;
+  text-shadow: 0 1px 2px rgba(90, 60, 60, .55), 0 4px 30px rgba(120, 70, 50, .6);
+}
+.hero-tagline {
+  margin: 0.9rem 0 0;
+  font-size: clamp(1rem, 2.8vw, 1.35rem);
+  letter-spacing: 0.04em;
+  color: #fff6ea;
+  text-shadow: 0 1px 2px rgba(90, 60, 60, .55), 0 3px 22px rgba(120, 70, 50, .6);
+}
+.hero-scroll {
+  margin-top: 2.2rem;
+  font: 400 0.72rem/1 "DM Mono", ui-monospace, Menlo, monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 240, 225, .75);
+  text-decoration: none;
+  border: 0.5px solid rgba(255, 240, 225, .35);
+  border-radius: 999px;
+  padding: 0.7em 1.4em;
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+  transition: border-color .25s ease, color .25s ease;
+}
+.hero-scroll:hover { border-color: rgba(255, 240, 225, .9); color: #fff; }
+
+/* ==== scroll-reveal transitions between sections ==== */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity .8s cubic-bezier(.16, 1, .3, 1), transform .8s cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; transform: none; opacity: 1; }
+}
+
+/* ==== middle section: the craft, three tilt cards in a deck ==== */
+.craft-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(3rem, 8vw, 6rem) 20px;
+  background:
+    radial-gradient(1100px 600px at 50% 100%, #171b2a 0%, #0b0d13 60%, #08090d 100%);
+  overflow: hidden;
+}
+.craft-head { text-align: center; max-width: 560px; }
+
+/* the deck: stacked until clicked - site.js drives a 0-to-1 spring that fans
+   the cards, springs the deck's height with it, and sets each card's target */
+.craft-deck {
+  position: relative;
+  width: 100%;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  --deck-fan: 0;
+  will-change: height;
+}
+.craft-card {
+  grid-area: 1 / 1; /* all three stacked in the same cell */
+  margin: 14px 0 20px;
+  transform:
+    translate(calc(var(--deck-fan) * var(--fx, 0px)), calc(var(--deck-fan) * var(--fy, 0px)))
+    rotate(calc(var(--deck-fan) * var(--fr, 0deg)));
+  will-change: transform;
+}
+
+/* stacked pile: only the top card of the pile takes the click; it deals the deck */
+.craft-deck:not(.deck-open) .craft-card { pointer-events: none; }
+.craft-deck:not(.deck-open) .craft-card:last-child { pointer-events: auto; }
+.craft-deck.deck-open .craft-card { pointer-events: auto; }
+
+/* dealt layout is set per-card from JS (--fx/--fy/--fr); --fs scales the dealt
+   cards down a touch on narrow desktops so the whole fan always stays on screen */
+.craft-card:nth-child(1) { --fx: -340px; --fy: 8px;  --fr: -7deg; }
+.craft-card:nth-child(2) { --fx: 0px;    --fy: -10px; --fr: 0deg; }
+.craft-card:nth-child(3) { --fx: 340px;  --fy: 8px;  --fr: 7deg; }
+.craft-card {
+  transform-origin: 50% 40%;
+  scale: calc(1 - (1 - var(--fs, 1)) * var(--deck-fan, 0));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .craft-card { transform: none; transition: none; }
+}
+
+/* scroll-transition motion: vars set from js; the hero content sinks and fades
+   into the next section, settled section content drifts up as it stays put */
+.hero-content {
+  opacity: var(--hero-fade, 1);
+  transform: translateY(calc(var(--hero-risepx, 0) * 1px));
+}
+.craft-head.reveal.is-in,
+.about-head.reveal.is-in,
+.stage.reveal.is-in { transform: translateY(calc(var(--drift, 0) * 1px)); }
+.craft-deck.reveal.is-in { transform: translateY(calc(var(--deck-drift, 0) * 1px)); }
+
+/* ==== last page: about me with the holo card ==== */
+.about-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: clamp(3rem, 8vw, 6rem) 20px;
+  background:
+    radial-gradient(1100px 700px at 50% 0%, #1c2333 0%, #0c0e14 60%, #08090d 100%);
+}
+.about-head { text-align: center; max-width: 560px; will-change: transform; } /* parallax target (site.js) */
+
+/* lift the holo card up a bit: leaves breathing room for the contact links */
+.about-section { padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+.about-section .stage { margin-top: clamp(-2.5rem, -4vw, -1.25rem); }
+
+.about-eyebrow {
+  margin: 0 0 1rem;
+  font: 400 0.8rem/1 "DM Mono", ui-monospace, Menlo, monospace;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #9a958a;
+}
+.about-copy {
+  margin: 0;
+  font-size: clamp(1rem, 2.6vw, 1.15rem);
+  line-height: 1.6;
+  color: #b8b2a6;
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+/* contact links under the card: quiet pill pair, roomy and uncluttered */
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(0.75rem, 2.5vw, 2rem);
+  max-width: 100%;
+  margin: 0;
+}
+.contact-link { min-width: 0; }
+.contact-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.55em;
+  text-decoration: none;
+  color: #9a958a;
+  font: 400 0.78rem/1 "DM Mono", ui-monospace, Menlo, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(154, 149, 138, .28);
+  border-radius: 999px;
+  padding: 0.85em 1.2em;
+  max-width: calc(100vw - 40px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color .25s ease, border-color .25s ease, background-color .25s ease;
+}
+.contact-link span { color: #e8e6df; font-size: 0.92rem; letter-spacing: 0.06em; text-transform: none; }
+.contact-link:hover { color: #fff7ea; border-color: rgba(255, 246, 237, .65); background: rgba(255, 246, 237, .06); }
+.contact-link:focus-visible { outline: 2px solid #ffb27a; outline-offset: 3px; }

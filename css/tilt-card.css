@@ -1,0 +1,106 @@
+.vs-tilt-card{
+  --vs-tilt-card-w: 300px;
+  --vs-tilt-card-radius: 20px;
+  --vs-tilt-card-max: 11;
+  --vs-tilt-card-ink: #fff6ed;
+  --vs-tilt-card-accent: #ffb27a;
+  --vs-tilt-card-glare: .85;
+  --vs-tilt-card-foil: .6;
+  --vs-tilt-card-back: #16120f;
+  --vs-tilt-card-shadow: rgba(3,2,2,.62);
+  position: relative; width: var(--vs-tilt-card-w); aspect-ratio: 5 / 7;
+  perspective: 1000px; cursor: pointer; outline: none; user-select: none; -webkit-user-select: none;
+  touch-action: pan-y; -webkit-tap-highlight-color: transparent;
+  color: var(--vs-tilt-card-ink); font-family: "Space Mono", ui-monospace, Menlo, monospace;
+}
+.vs-tilt-card-shadow{
+  position: absolute; left: 9%; right: 9%; top: 14%; bottom: -3%; border-radius: var(--vs-tilt-card-radius);
+  background: var(--vs-tilt-card-shadow); filter: blur(26px); transform: translate3d(0,18px,0); will-change: transform, opacity;
+  pointer-events: none;
+}
+.vs-tilt-card-body{
+  position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; pointer-events: none;
+}
+.vs-tilt-card-face{
+  position: absolute; inset: 0; border-radius: var(--vs-tilt-card-radius); overflow: hidden;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden; isolation: isolate;
+  background: #0d0c0b;
+}
+.vs-tilt-card-face::after{ /* hairline edge + top light, like a laminated card */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 6;
+  box-shadow: inset 0 0 0 1px rgba(255,246,237,.16), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.vs-tilt-card-back{ transform: rotateY(180deg); background: var(--vs-tilt-card-back); }
+
+.vs-tilt-card-img{
+  position: absolute; inset: -5%; width: 110%; height: 110%; object-fit: cover; display: block;
+  will-change: transform; transform: translate3d(0,0,0);
+}
+.vs-tilt-card-scrim{
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(to top, rgba(10,8,7,.9) 0%, rgba(10,8,7,.5) 26%, rgba(10,8,7,0) 52%),
+    linear-gradient(to bottom, rgba(10,8,7,.55) 0%, rgba(10,8,7,.12) 16%, rgba(10,8,7,0) 26%);
+}
+/* holographic foil: a contour-line mask, with a moving spectral strip under it */
+.vs-tilt-card-foil{
+  position: absolute; inset: 0; z-index: 2; opacity: 0; mix-blend-mode: color-dodge; overflow: hidden;
+  --vs-tilt-card-lines: repeating-radial-gradient(ellipse 140% 90% at 18% 112%, #000 0 .8px, transparent 1.4px 11px);
+  -webkit-mask-image: var(--vs-tilt-card-lines), linear-gradient(to top, #000 8%, rgba(0,0,0,.35) 45%, transparent 70%);
+  -webkit-mask-composite: source-in;
+          mask-image: var(--vs-tilt-card-lines), linear-gradient(to top, #000 8%, rgba(0,0,0,.35) 45%, transparent 70%);
+          mask-composite: intersect;
+  will-change: opacity;
+}
+.vs-tilt-card-foil i{
+  position: absolute; top: -50%; left: -100%; width: 300%; height: 200%; will-change: transform;
+  background: linear-gradient(112deg,
+    transparent 40%, #ff9a6b 44%, #ffe38a 46.5%, #9dffcf 49%, #8ad7ff 51.5%, #c8a2ff 54%, #ff9ad1 56%, transparent 60%);
+}
+.vs-tilt-card-glare{
+  position: absolute; inset: 0; z-index: 5; overflow: hidden; opacity: 0; mix-blend-mode: overlay;
+  pointer-events: none; will-change: opacity;
+}
+.vs-tilt-card-glare i{
+  position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; will-change: transform;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,.5) 12%, rgba(255,255,255,.12) 26%, rgba(255,255,255,0) 42%);
+}
+.vs-tilt-card-content{
+  position: absolute; inset: 0; z-index: 3; padding: 20px 20px 18px; display: flex; flex-direction: column;
+  will-change: transform;
+}
+.vs-tilt-card-row{ display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  font-size: 10.5px; line-height: 1; letter-spacing: .16em; text-transform: uppercase; }
+.vs-tilt-card-row span:last-child{ opacity: .62; }
+.vs-tilt-card-title{
+  margin: auto 0 0; font: 400 38px/.95 "Gilda Display", Georgia, serif; letter-spacing: -.02em;
+  text-shadow: 0 2px 18px rgba(0,0,0,.35);
+}
+.vs-tilt-card-sub{ margin: 8px 0 16px; font: 400 16px/1.2 "Gilda Display", Georgia, serif; opacity: .62; }
+.vs-tilt-card-foot{ display: flex; justify-content: space-between; align-items: flex-end; gap: 10px;
+  padding-top: 12px; border-top: 1px solid rgba(255,246,237,.2);
+  font-size: 10px; line-height: 1.5; letter-spacing: .12em; text-transform: uppercase; }
+.vs-tilt-card-foot b{ font-weight: 400; color: var(--vs-tilt-card-accent); }
+.vs-tilt-card-turn{ display: inline-flex; align-items: center; gap: 6px; opacity: .7; white-space: nowrap; }
+.vs-tilt-card-turn svg{ width: 12px; height: 12px; }
+.vs-tilt-card-dot{ display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 8px;
+  background: var(--vs-tilt-card-accent); box-shadow: 0 0 10px var(--vs-tilt-card-accent); vertical-align: 1px; }
+
+/* back face */
+.vs-tilt-card-back .vs-tilt-card-content{ padding: 22px 20px 18px; }
+.vs-tilt-card-back::before{ /* topographic paper texture */
+  content: ""; position: absolute; inset: 0; opacity: .08;
+  background: repeating-radial-gradient(ellipse 120% 80% at 80% -10%, var(--vs-tilt-card-ink) 0 1px, transparent 1.5px 11px);
+}
+.vs-tilt-card-back .vs-tilt-card-title{ margin: 18px 0 0; font-size: 30px; }
+.vs-tilt-card-dl{ margin: auto 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; }
+.vs-tilt-card-dl dt{ font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; opacity: .5; }
+.vs-tilt-card-dl dd{ margin: 5px 0 0; font: 400 17px/1.1 "Gilda Display", Georgia, serif; }
+.vs-tilt-card-code{ margin-top: 18px; height: 34px; opacity: .85;
+  background: repeating-linear-gradient(90deg, var(--vs-tilt-card-ink) 0 2px, transparent 2px 4px, var(--vs-tilt-card-ink) 4px 5px, transparent 5px 9px, var(--vs-tilt-card-ink) 9px 12px, transparent 12px 14px); }
+.vs-tilt-card-back .vs-tilt-card-foot{ margin-top: 10px; }
+
+.vs-tilt-card:focus-visible .vs-tilt-card-face{ box-shadow: 0 0 0 2px #0d0c0b, 0 0 0 4px var(--vs-tilt-card-accent); }
+@media (prefers-reduced-motion: reduce){
+  .vs-tilt-card-foil, .vs-tilt-card-glare{ display: none; }
+}

@@ -1,0 +1,38 @@
+.vs-holo-card {
+  --vs-holo-card-accent: #d8b25c;
+  --vs-holo-card-intensity: 1;
+  --vs-holo-card-tilt: 16;
+  --vs-holo-card-width: min(340px, 78vw);
+  position: relative; display: grid; place-items: center; width: 100%; height: 100%; min-height: 540px; perspective: 1200px;
+}
+.vs-holo-card-tilt {
+  position: relative; width: var(--vs-holo-card-width); aspect-ratio: 63 / 88; border-radius: calc(var(--vs-holo-card-width) * .045);
+  overflow: hidden; cursor: pointer; outline: none; touch-action: none; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+  transform-origin: 50% 50%; background: #1a1a1a;
+  box-shadow: inset 0 0 0 .5px rgba(255,255,255,.25), 0 1px 1px rgba(0,0,0,.25);
+  container-type: inline-size;
+}
+.vs-holo-card-tilt:focus-visible { box-shadow: 0 0 0 2px #121214, 0 0 0 4px var(--vs-holo-card-accent); }
+.vs-holo-card-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.vs-holo-card-shadow { position: absolute; left: 50%; top: 50%; width: var(--vs-holo-card-width); aspect-ratio: 63 / 88; margin-left: calc(var(--vs-holo-card-width) / -2);
+  transform: translateY(-50%); border-radius: 6%; pointer-events: none; will-change: transform;
+  background: rgba(0,0,0,.55); filter: blur(28px); opacity: .7; }
+/* the printed face: sits on the shader, sized in container units so it scales with the card */
+.vs-holo-card-face { position: absolute; inset: 0; pointer-events: none; color: #17140f; transition: opacity .12s linear;
+  font: 400 3.3cqw/1.38 "Chakra Petch", ui-sans-serif, system-ui, sans-serif; }
+.vs-holo-card.is-back .vs-holo-card-face { opacity: 0; }
+.vs-holo-card-name { position: absolute; left: 7%; right: 7%; top: 4.6%; height: 5.6%; display: flex; align-items: center; justify-content: space-between; color: #fbf6ea; }
+.vs-holo-card-name b { font-weight: 600; font-size: 5.6cqw; letter-spacing: -.01em; text-shadow: 0 1px 0 rgba(0,0,0,.35); }
+.vs-holo-card-name span { font: 400 3cqw/1 "DM Mono", ui-monospace, Menlo, monospace; letter-spacing: .08em; opacity: .85; }
+.vs-holo-card-type { position: absolute; left: 7%; right: 7%; top: 56.2%; margin: 0; font: 400 2.7cqw/1 "DM Mono", ui-monospace, Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; color: #fbf6ea; opacity: .9; }
+.vs-holo-card-text { position: absolute; left: 10%; right: 10%; top: 63%; bottom: 11%; display: flex; flex-direction: column; justify-content: center; gap: 2.6cqw; }
+.vs-holo-card-text p { margin: 0; }
+.vs-holo-card-text b { font-weight: 600; }
+.vs-holo-card-flavor { font-size: 3cqw; opacity: .62; padding-top: 2.4cqw; border-top: .5px solid rgba(23,20,15,.25); }
+.vs-holo-card-foot { position: absolute; left: 7%; right: 7%; bottom: 3.6%; display: flex; justify-content: space-between; font: 400 2.4cqw/1 "DM Mono", ui-monospace, Menlo, monospace; letter-spacing: .06em; color: #fbf6ea; opacity: .85; }
+/* no WebGL: a printed card with a CSS foil */
+.vs-holo-card[data-vs-state="nogl"] .vs-holo-card-gl { display: none; }
+.vs-holo-card[data-vs-state="nogl"] .vs-holo-card-tilt { background:
+  linear-gradient(115deg, transparent 20%, rgba(255,120,200,.35), rgba(120,220,255,.35), rgba(255,240,140,.35), transparent 80%) 0 0 / 100% 100%,
+  linear-gradient(#0e2a3a, #2c5d6b 30%, #f2b872 52%, #f1ece2 52%, #f1ece2 92%, var(--vs-holo-card-accent) 92%); }
+@media (prefers-reduced-motion: reduce) { .vs-holo-card-face { transition: none; } }

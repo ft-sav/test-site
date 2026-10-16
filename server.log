@@ -1,0 +1,53 @@
+Python install manager was successfully updated to 26.3.
+
+Additional shebang configuration is now available. Please see
+https://docs.python.org/using/windows#shebang-lines for more information.
+
+********************************************************************************
+The signature for https://www.python.org/ftp/python/index-windows.json was successfully verified.
+Installing Python 3.15.0.
+Downloading: ...................................................................
+Extracting: ....................................................................
+To see all available commands, run 'py help'
+********************************************************************************
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\http\server.py", line 1177, in <module>
+    _main()
+    ~~~~~^^
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\http\server.py", line 1154, in _main
+    test(
+    ~~~~^
+        HandlerClass=SimpleHTTPRequestHandler,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        tls_password=tls_key_password,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\http\server.py", line 1062, in test
+    with _make_server(
+         ~~~~~~~~~~~~^
+        HandlerClass=HandlerClass, ServerClass=ServerClass,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        default_content_type=content_type,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as httpd:
+    ^
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\http\server.py", line 1050, in _make_server
+    return ServerClass(addr, HandlerClass)
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\socketserver.py", line 454, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\http\server.py", line 1140, in server_bind
+    return super().server_bind()
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\http\server.py", line 122, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sreek\AppData\Local\Python\pythoncore-3.15-64\Lib\socketserver.py", line 475, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions
